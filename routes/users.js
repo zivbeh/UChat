@@ -79,11 +79,11 @@ router.get('/verify-email', async function(req, res, next) {
       console.log('1', user);
       try {
         console.log('inserting');
+        return res.redirect('/');
       } catch (err) {
         console.log(err);
         return res.render('users/new', { user, error: req.flash('error')});
       }
-      return res.redirect('/');
     });
   } catch (err) {
     req.flash('error', 'Password reset token is invalid or has expired.');
