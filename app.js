@@ -10,6 +10,7 @@ var passport = require('passport');
 var flash = require('connect-flash');
 
 var indexRouter = require('./routes/index');
+var ChatRouter = require('./routes/Chatup');
 var usersRouter = require('./routes/users');
 
 
@@ -35,6 +36,7 @@ app.use(passport.session());
 require('./initializer/passport');
  
 app.use('/', indexRouter);
+app.use('/Chatup', ChatRouter);
 app.use('/users', usersRouter);
 
 
