@@ -17,6 +17,15 @@ body {
     }
 }
 
+.fa-paper-plane {
+  font-size: large;
+  margin: 3px;
+}
+.fa-paper-plane:hover{
+  color: #00B7FF;
+  transition: 50ms;
+}
+
 .bg-light {
   background-color: #f4dcc1!important;
 }
