@@ -237,7 +237,7 @@ function init(server) {
 
             socket.leave(d);
             socket.data.activeRoom = room; 
-            socket.join(c); 
+            socket.join(c);
 
             var dictionary = {};
             var a = room[0].dataValues.id;

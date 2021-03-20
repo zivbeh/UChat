@@ -14,7 +14,7 @@ router.get('/', function(req, res, next) {
   else {
     x = null;
   }
-  res.render('index', { title: 'My Login', user: x });
+  res.render('index', { title: 'Express', user1: x, user: req.user });
 });
 
 router.get('/forgotPassword', function(req, res, next) {
