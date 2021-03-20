@@ -6,7 +6,7 @@
 
 <div class="collapse navbar-collapse" id="navbarSupportedContent">
   <ul class="navbar-nav mr-auto">
-      <% if(user === undefined){ %>
+      <% if(user === undefined || user === null){ %>
         <li class="nav-item active">
           <a class="nav-link" href="/sessions">Login<span class="sr-only">(current)</span></a>
         </li>
@@ -26,7 +26,7 @@
 </nav>
 <div id="side-menu" class="side-nav">
 <a href="#" class="btn-close" onclick="closeSlideMenu()">&times;</a>
-<% if(user === undefined){ %>
+<% if(user === undefined || user === null){ %>
     <a class="nav-link" href="/sessions">Login<span class="sr-only">(current)</span></a>
     <a class="nav-link" href="/users">SignUp</a>
 <% } else { %>

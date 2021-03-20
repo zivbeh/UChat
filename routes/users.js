@@ -20,7 +20,8 @@ router.get('/', async function(req, res, next) {
   }
   console.log(error)
   res.render('users/new', { 
-    user: new User(),
+    userr: new User(),
+    user: null,
     error: error
   });
 });

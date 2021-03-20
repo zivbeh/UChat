@@ -6,7 +6,7 @@ const socketio = require('../liveupdate');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-  res.render('sessions/new', { error: req.flash('error')});
+  res.render('sessions/new', { error: req.flash('error'), user: null });
 });
 
 router.post('/',
