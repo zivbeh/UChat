@@ -140,11 +140,17 @@
         if (currentRoom != 'NoRoom'){
             $('.room.active').removeClass('active');
         }
+        var span;
         if($(ev.target).attr('class') === 'parent'){
-            $(ev.target.parentNode).addClass('active');
+            $(ev.target.parentNode).addClass('active');  
+
+            span = document.getElementById(ev.target.parentNode.id).getElementsByTagName('span');
         } else if($(ev.target).attr('class') === 'roomname') {
             $(ev.target.parentNode.parentNode).addClass('active');
+
+            span = document.getElementById(ev.target.parentNode.parentNode.id).getElementsByTagName('span');
         }
+        document.getElementById('p-roomName').innerHTML = span[0].outerText;
 
         document.getElementById('send').style.display = 'flex';
         document.getElementById('cons').style.display = "flex";

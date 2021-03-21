@@ -9,7 +9,7 @@ function passwordShower() {
 function heightsizer(){
   var height = $('main').height();
   var cons6 = document.getElementById('cons');
-  cons6.style.height = height+"px";
+  cons6.style.height = (height-40)+"px";
 
   var roomlist = document.getElementById('room-list');
   roomlist.style.maxHeight = (height-65)+"px";
