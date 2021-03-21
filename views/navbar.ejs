@@ -21,7 +21,7 @@
             <a class="nav-link" href="/Chatup">Chat<span class="sr-only">(current)</span></a>
           </li>
           <li>
-            <input type="checkbox" id="toggle"/>
+            <input type="checkbox" id="toggle" class="toggle1"/>
             <div class="check-toggle">
               <label for="toggle" class="label"></label>
             </div>
@@ -39,22 +39,47 @@
       <a class="nav-link" href="/settings">Hello <span class="UserName"><u><%= user.dataValues.Name %></u></span><span class="sr-only">(current)</span></a>
       <a class="nav-link" href="/Chatup">Chat<span class="sr-only">(current)</span></a>
       <div style="padding: 10px 10px 10px 30px;">
-        <input type="checkbox" id="toggle1"/>
+        <input type="checkbox" id="toggle1" class="toggle2"/>
         <div class="check-toggle">
           <label for="toggle1" class="label"></label>
         </div>
       </div>
 <% } %>
 </div>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+crossorigin="anonymous"></script>
 <script>
-function openSlideMenu(){
-  document.getElementById('side-menu').style.width = '250px';
-  /*document.getElementById('main').style.marginLeft = '250px';*/
-}
-function closeSlideMenu(){
-  document.getElementById('side-menu').style.width = '0';
-  /*document.getElementById('main').style.marginLeft = '0';*/
-}
+  function openSlideMenu(){
+    document.getElementById('side-menu').style.width = '250px';
+    /*document.getElementById('main').style.marginLeft = '250px';*/
+  }
+  function closeSlideMenu(){
+    document.getElementById('side-menu').style.width = '0';
+    /*document.getElementById('main').style.marginLeft = '0';*/
+  }
+
+  var toginput = document.getElementById('toggle');
+  var toginput1 = document.getElementById('toggle1');
+  toginput.addEventListener('change', (event) => {
+    if (event.currentTarget.checked) {
+      toginput1.checked = true;
+      console.log('checked the second')
+    } else {
+      toginput1.checked = false;
+      console.log('uchecked the second')
+    }
+  })
+  toginput1.addEventListener('change', (event) => {
+    if (event.currentTarget.checked) {
+      toginput.checked = true;
+      console.log('checked the first')
+    } else {
+      toginput.checked = false;
+      console.log('uchecked the first')
+    }
+  })
+
+
 </script>
 <style>
 li{
