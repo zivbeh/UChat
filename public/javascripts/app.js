@@ -64,10 +64,10 @@
                 $roomInfoList.append(
                     `<div class="user-row">
                         <span>${member}</span>
-                        <button type="submit">
-                            <i class="fas fa-user-times"></i>
-                        </button>
                     </div>`
+                    //  <button type="submit">
+                    //      <i class="fas fa-user-times"></i>
+                    //  </button>
                 );
             })
         },
