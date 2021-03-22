@@ -6,10 +6,19 @@ function passwordShower() {
       x.type = "password";
     }
 }
+
+// console.log(Notification.permission)
+// Notification.requestPermission(function (status) {
+//   // If the user said okay
+//   if (status === "granted") {
+//     var n = new Notification("Hi! ", {tag: 'soManyNotification'});
+//   }
+// });
+
 function heightsizer(){
   var height = $('main').height();
   var cons6 = document.getElementById('cons');
-  cons6.style.height = (height-40)+"px";
+  cons6.style.height = (height-55)+"px";
 
   var roomlist = document.getElementById('room-list');
   roomlist.style.maxHeight = (height-65)+"px";
@@ -25,7 +34,7 @@ a.addEventListener('input', function () {
 
 window.onload = function(){
   heightsizer();
-
+  size();
   tiles.style.filter = 'hue-rotate(150deg)';
   a.value = 152;
 
@@ -33,6 +42,8 @@ window.onload = function(){
   y.style.display = "none";
   const x = document.getElementById('cons');
   x.style.display = "none";
+  var z = document.getElementById('room-info-header');
+  z.style.display = "none";
 
   // const d = document.getElementById('cons');
   // d.scrollTo(0,d.scrollHeight);
@@ -68,7 +79,7 @@ function size(){
     er.style.width = 200+'px';
   }
 }
-size();
+
 document.getElementById("Back").addEventListener("click", function () {
   const e = document.getElementById('gingi');
   e.style.display = "none";
@@ -110,12 +121,17 @@ if(height == 568){
   });
 }
 
+function closeRoomInfo() {
+  var info = document.getElementById('infoRoom');
+  info.style.display='none';
+}
 
 (function () {
   const socket = io();
   socket.on('createRoom', App.createRoom);
   socket.on('message', App.newMessage);
   socket.on('deleteRoom', App.deleteRoom);
+  socket.on('getRoomInfo', App.getRoomInfo);
 
   const server = {
       changeRoom(oldRoom, newRoom) {
@@ -132,6 +148,10 @@ if(height == 568){
 
       createRoom(roomna) {
           socket.emit('createRoom', roomna);
+      },
+
+      getRoomInfo(roomId) {
+        socket.emit('getRoomInfo', roomId);
       }
   };
 

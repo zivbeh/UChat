@@ -4,6 +4,7 @@
         sendMessage(text) { },
         createRoom(roomName) { },
         deleteRoom(roomName) { },
+        getRoomInfo(roomId) { },
     }
 
     const $panel = $('.cons');
@@ -11,6 +12,11 @@
     const $myMessageButton = $('.fa-paper-plane');
 
     const $roomList = $('.room-list');
+
+    const $info = $('.fa-info-circle');
+    const $roomInfoList = $('.all-users-in-list');
+    const infoRoom = document.getElementById('infoRoom');
+
 
     const $user = $('.UserName').get();
 
@@ -48,6 +54,24 @@
 
     
     window.App = {
+        getRoomInfo(roomUsers) {
+            console.log('info', roomUsers) // Work!!!
+
+            $roomInfoList.html('');
+            infoRoom.style.display = "block";
+
+            roomUsers.forEach(member => {
+                $roomInfoList.append(
+                    `<div class="user-row">
+                        <span>${member}</span>
+                        <button type="submit">
+                            <i class="fas fa-user-times"></i>
+                        </button>
+                    </div>`
+                );
+            })
+        },
+
         createRoom(roomName) {
             console.log($roomList[0].children.length, $('.room-list')[0].children.length)
             $('.room-list').append(`<li id="${$('.room-list')[0].children.length}" class="room"><div id="Nope" class="parent"><span id="No" class="roomname">${roomName}</span> <i class='material-icons remove'>delete</i></div></li>`)
@@ -152,8 +176,14 @@
         }
         document.getElementById('p-roomName').innerHTML = span[0].outerText;
 
+        var info = document.getElementById('infoRoom');
+        if (info.style.display != 'none'){
+            info.style.display = 'none';
+        }
+
         document.getElementById('send').style.display = 'flex';
         document.getElementById('cons').style.display = "flex";
+        document.getElementById('room-info-header').style.display = "flex";
         server.changeRoom(currentRoom, Id);
         document.getElementById('clear').style.display = "none";
         $panel.html('');
@@ -188,4 +218,13 @@
     $myMessageButton.click(function() {
         WhatToDoWhenSendingAMessage();
     });
+
+    $info.on('click', function(ev) {
+        var FakeroomName = ev.target.parentNode.parentNode.children[0].children[0].textContent;
+        console.log(FakeroomName)
+
+        var activeId = $('.room.active').attr('id');
+        console.log(activeId)
+        server.getRoomInfo(activeId);
+    })
 }());

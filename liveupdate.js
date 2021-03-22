@@ -22,9 +22,9 @@ function init(server) {
         let res = { getHeader: () => { }, setHeader: () => { } };
 
         var ctionary = {};
-        async function resetIdLidictionary(iid){
+        async function resetIdLidictionary(iid){ // checks all rooms with that user and connect them to the list on the client 
             ctionary = {};
-            const allRoms = await db.Users.findOne({ where: { id: iid },  // use Op [Op.ne]: flas
+            const allRoms = await db.Users.findOne({ where: { id: iid },
             include: [{
                 model: db.ChatRoom,
                 required: false,
@@ -33,6 +33,7 @@ function init(server) {
                 }
             }]
             });
+            console.log(allRoms)
             for (let index = 0; index < allRoms.dataValues.ChatRooms.length; index++) {
                 const element = allRoms.dataValues.ChatRooms[index];
                 ctionary[element.dataValues.id] = index;
@@ -266,6 +267,36 @@ function init(server) {
                     io.to(socket.id).emit('message', { text: b.text, from: b.from, id: socket.data.user.dataValues.id});
                 }
             }
+        });
+
+        socket.on('getRoomInfo', async function(FakeRoomId) {
+            console.log(FakeRoomId, 'work')
+            const dc =  await resetIdLidictionary(socket.data.user.dataValues.id);
+            console.log(dc)
+            var RealRoomId = Object.keys(dc).find(key => dc[key] == FakeRoomId);
+            console.log(Object.keys(dc), RealRoomId)
+
+            const room = await db.User_Rooms.findAll({ where: {ChatRoomId: RealRoomId} });
+            console.log(room)
+
+            var UserIdArray = [];
+            room.forEach(user => {
+                UserIdArray.push(user.dataValues.UserId);
+            });
+            console.log(UserIdArray)
+
+            const users = await db.Users.findAll({where: {
+                Id: UserIdArray
+            }});
+
+            var UserNameArray = [];
+            users.forEach(user => {
+                UserNameArray.push(user.dataValues.Name);
+            });
+
+            console.log(UserNameArray)
+
+            io.to(socket.id).emit('getRoomInfo', UserNameArray);
         });
 
     })

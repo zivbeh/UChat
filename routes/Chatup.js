@@ -163,12 +163,13 @@ router.post('/newroom', async function(req, res, next) {
         Email: array
     }});
     var room;
-    const TF = array.find(element => element === user.dataValues.Email);
+    const TF = array.find(element => element == user.dataValues.Email);
     if(TF){
         req.flash('error', "you can't write your email in field");
         return res.redirect('/Chatup/NewRoom');
     }
-    if (users.length === 1){
+    console.log(users)
+    if (users.length == 1){
         const roon = await db.ChatRoom.findAll({ where: { Due: true, '$Users.id$': user.dataValues.id },
             include: [{
                 model: db.Users,
@@ -195,7 +196,7 @@ router.post('/newroom', async function(req, res, next) {
                 var value1 = li.dataValues.Users[1].dataValues.id;
                 if(user.dataValues.id === value0 && users[0].dataValues.id === value1 || user.dataValues.id === value1 && users[0].dataValues.id === value0){
                     req.flash('error', 'Already have a room with this friend');
-                    return res.redirect('/Chatup/NewContact');
+                    return res.redirect('/Chatup/NewRoom');
                 } else {
                 }
             }
