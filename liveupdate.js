@@ -318,7 +318,9 @@ function init(server) {
             const token = jwt.sign({ roomId: RealRoomId }, process.env.JWT_KEY, { expiresIn: '30m' })
             console.log(token)
 
-            io.to(socket.id).emit('getRoomInfo', UserNameArray, token);
+            var link = `http://chatup-sifo.herokuapp.com/Chatup/NewRoom/joinRoomWithLink/?token=${token}`;
+
+            io.to(socket.id).emit('getRoomInfo', UserNameArray, link);
         });
 
     })
