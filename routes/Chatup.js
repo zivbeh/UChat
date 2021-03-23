@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../models');
+var jwt = require('jsonwebtoken');
 const { Op } = require("sequelize");
 const liveUpdate1 = require("../liveupdate").flash;
 var flas = null;
@@ -179,7 +180,7 @@ router.get('/NewRoom/joinRoomWithLink', async function(req, res) {
         res.redirect('/sessions');
     }
 
-    //try {
+    try {
       const token = req.query.token;
       jwt.verify(token, process.env.JWT_KEY, async (err, decodedToken) => {
         console.log(`token:   ${token}`)
@@ -203,10 +204,10 @@ router.get('/NewRoom/joinRoomWithLink', async function(req, res) {
 
         res.redirect('/');
       });
-    // } catch (error) {
-    //     req.flash('error', 'Join Room token is invalid or has expired.');
-    //     return res.redirect('/Chatup/NewRoom/joinRoom');
-    // }
+    } catch (error) {
+        req.flash('error', 'Join Room token is invalid or has expired.');
+        return res.redirect('/Chatup/NewRoom/joinRoom');
+    }
   });
 
 router.get('/NewContact', function(req, res, next) {
