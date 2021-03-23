@@ -303,7 +303,7 @@ function init(server) {
                 if (dictionary.hasOwnProperty(element)){
                     UserNameArray.push(dictionary[element]);
                 } else {
-                    const user = await db.Users.findAll({where: {
+                    const user = await db.Users.findOne({where: {
                         Id: element
                     }});
                     UserNameArray.push(user.dataValues.Name);
