@@ -283,17 +283,34 @@ function init(server) {
             room.forEach(user => {
                 UserIdArray.push(user.dataValues.UserId);
             });
-            console.log(UserIdArray)
+            console.log(UserIdArray)       
 
-            const users = await db.Users.findAll({where: {
-                Id: UserIdArray
-            }});
+            var MeIndex = UserIdArray.indexOf(socket.data.user.dataValues.id);
+            UserIdArray.splice(MeIndex, 1);
+
+            var dictionary = {};
+            const ContactsArray = await db.Contacts.findAll({ where: { UserId: socket.data.user.dataValues.id } });
+            for (let i = 0; i < ContactsArray.length; i++){
+                var value = ContactsArray[i].dataValues;
+                dictionary[value.RealUserId] = value.userName;
+            }
+            console.log(dictionary)
 
             var UserNameArray = [];
-            users.forEach(user => {
-                UserNameArray.push(user.dataValues.Name);
-            });
-
+            for (let index = 0; index < UserIdArray.length; index++) {
+                const element = UserIdArray[index];
+                console.log(element)
+                if (dictionary.hasOwnProperty(element)){
+                    UserNameArray.push(dictionary[element]);
+                } else {
+                    const user = await db.Users.findAll({where: {
+                        Id: element
+                    }});
+                    UserNameArray.push(user.dataValues.Name);
+                }
+            }
+            
+            UserNameArray.push(socket.data.user.dataValues.Name)
             console.log(UserNameArray)
 
             io.to(socket.id).emit('getRoomInfo', UserNameArray);
