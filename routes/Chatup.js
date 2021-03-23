@@ -193,7 +193,7 @@ router.get('/NewRoom/joinRoomWithLink', async function(req, res) {
         }
 
         // Add to database
-        const checkRoom = await db.ChatRoom.findOne({ where: { UserId: user.dataValues.id, ChatRoomId: roomId } });
+        const checkRoom = await db.User_Rooms.findOne({ where: {ChatRoomId: roomId, UserId: user.dataValues.id} });
         if (checkRoom){
             req.flash('error', "Can't join room u are already in");
             return res.redirect('/Chatup/NewRoom/joinRoom');
