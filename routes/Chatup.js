@@ -171,7 +171,7 @@ router.post('/NewRoom/joinRoom', function(req, res, next) {
 });
 
 router.get('/NewRoom/joinRoomWithLink', async function(req, res) {
-    console.log(`token`)
+    console.log(`token?1?1?1?!!?!?!?1?1?1/1/1!?`)
     
     const user = req.user;
     if (!user){
@@ -179,7 +179,7 @@ router.get('/NewRoom/joinRoomWithLink', async function(req, res) {
         res.redirect('/sessions');
     }
 
-    try {
+    //try {
       const token = req.query.token;
       jwt.verify(token, process.env.JWT_KEY, async (err, decodedToken) => {
         console.log(`token:   ${token}`)
@@ -203,10 +203,10 @@ router.get('/NewRoom/joinRoomWithLink', async function(req, res) {
 
         res.redirect('/');
       });
-    } catch (error) {
-        req.flash('error', 'Join Room token is invalid or has expired.');
-        return res.redirect('/Chatup/NewRoom/joinRoom');
-    }
+    // } catch (error) {
+    //     req.flash('error', 'Join Room token is invalid or has expired.');
+    //     return res.redirect('/Chatup/NewRoom/joinRoom');
+    // }
   });
 
 router.get('/NewContact', function(req, res, next) {
