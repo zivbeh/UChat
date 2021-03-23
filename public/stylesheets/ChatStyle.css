@@ -12,6 +12,10 @@ a {
   color: #00B7FF;
 }
 
+.btn-new-room {
+  margin-top: 2px;
+}
+
 .messages {
   background: #a5a5a5;
 }

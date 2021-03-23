@@ -130,6 +130,84 @@ router.get('/NewRoom', function(req, res, next) {
     res.render('ChatApp/newroom', { user: req.user, error: req.flash('error') });
 });
 
+router.get('/NewRoom/joinRoom', function(req, res, next) {
+    res.render('ChatApp/joinRoom', { user: req.user, error: req.flash('error') });
+});
+
+router.post('/NewRoom/joinRoom', function(req, res, next) {
+    const user = req.user;
+    if (!user){
+        req.flash('error', 'To get ChatUp you Have to login First');
+        res.redirect('/sessions');
+    }
+
+    const token = req.body.Link;
+    try {
+        jwt.verify(token, process.env.JWT_KEY, async (err, decodedToken) => {
+          console.log(`token:   ${token}`)
+    
+          const roomId = decodedToken.roomId;
+          if (!roomId) {
+            req.flash('error', 'Join Room token is invalid or has expired.');
+            return res.redirect('/Chatup/NewRoom/joinRoom');
+          }
+
+          // Add to database
+          const checkRoom = await db.ChatRoom.findOne({ where: { UserId: user.dataValues.id, ChatRoomId: roomId } });
+          if (checkRoom){
+            req.flash('error', "Can't join room u are already in");
+            return res.redirect('/Chatup/NewRoom/joinRoom');
+          }
+
+          const room = await db.ChatRoom.findOne({ where: { id: roomId } });
+          await user.addChatRoom(room, { through: {} });
+
+          res.redirect('/');
+        });
+      } catch (error) {
+        req.flash('error', 'Join Room token is invalid or has expired.');
+        return res.redirect('/Chatup/NewRoom/joinRoom');
+      }
+});
+
+router.get('/NewRoom/joinRoomWithLink', async function(req, res) {
+    console.log(`token`)
+    
+    const user = req.user;
+    if (!user){
+        req.flash('error', 'To get ChatUp you Have to login First');
+        res.redirect('/sessions');
+    }
+
+    try {
+      const token = req.query.token;
+      jwt.verify(token, process.env.JWT_KEY, async (err, decodedToken) => {
+        console.log(`token:   ${token}`)
+  
+        const roomId = decodedToken.roomId;
+        if (!roomId) {
+            req.flash('error', 'Join Room token is invalid or has expired.');
+            return res.redirect('/Chatup/NewRoom/joinRoom');
+        }
+
+        // Add to database
+        const checkRoom = await db.ChatRoom.findOne({ where: { UserId: user.dataValues.id, ChatRoomId: roomId } });
+        if (checkRoom){
+            req.flash('error', "Can't join room u are already in");
+            return res.redirect('/Chatup/NewRoom/joinRoom');
+        }
+
+        const room = await db.ChatRoom.findOne({ where: { id: roomId } });
+        await user.addChatRoom(room, { through: {} });
+
+        res.redirect('/');
+      });
+    } catch (error) {
+        req.flash('error', 'Join Room token is invalid or has expired.');
+        return res.redirect('/Chatup/NewRoom/joinRoom');
+    }
+  });
+
 router.get('/NewContact', function(req, res, next) {
     res.render('ChatApp/NewContact', { user: req.user, error: req.flash('error') });
 });

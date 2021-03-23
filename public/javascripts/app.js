@@ -16,6 +16,7 @@
     const $info = $('.fa-info-circle');
     const $roomInfoList = $('.all-users-in-list');
     const infoRoom = document.getElementById('infoRoom');
+    const roomlinkInput = document.getElementById('roomLinkInput');
 
 
     const $user = $('.UserName').get();
@@ -54,8 +55,9 @@
 
     
     window.App = {
-        getRoomInfo(roomUsers) {
-            console.log('info', roomUsers) // Work!!!
+        getRoomInfo(roomUsers, token) {
+            console.log('info', roomUsers, token) // Work!!!
+            roomlinkInput.value = `http://chatup-sifo.herokuapp.com/Chatup/NewRoom/joinRoomWithLink/?token=${token}`;
 
             $roomInfoList.html('');
             infoRoom.style.display = "block";

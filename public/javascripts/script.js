@@ -126,6 +126,15 @@ function closeRoomInfo() {
   info.style.display='none';
 }
 
+//var roomlinkInput = document.getElementById('roomLinkInput');
+function copyLink() {
+  var copyText = document.getElementById("roomLinkInput");
+  copyText.select();
+  copyText.setSelectionRange(0, 99999)
+  document.execCommand("copy");
+  console.log('text was copied successfuly')
+}
+
 (function () {
   const socket = io();
   socket.on('createRoom', App.createRoom);

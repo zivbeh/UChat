@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <title>Join Room</title>
+</head>
+<body class="body" style="margin: 70px;">
+    <div class="container" id="container">
+        <% if (error != '') { %>
+            <div class="alert alert-danger" role="alert">
+                <h4 class="alert1" id="alert"><%= error %></h4>
+            </div>
+        <% } %>
+        <form method="POST">
+            <div class="form-group">
+                <label for="formGroupExampleInput">Room Link</label>
+                <input name='Link' type="text" class="form-control" id="formGroupExampleInput" placeholder="insert your link here">
+            </div>
+
+            <input type="submit" class="btn btn-primary btn-lg active btn-block" value="Join Room" />
+            <a href='/Chatup' class="btn btn-secondary btn-lg active btn-block" role="button" aria-pressed="true">Return</a>
+        </form>
+    </div>
+</body>
+</html>

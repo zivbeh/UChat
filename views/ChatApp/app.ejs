@@ -32,10 +32,19 @@
                  <i class="fas fa-paper-plane"></i>
             </div>
             <div style="text-align: center;"><input id="input" step="1" type="range" min="0" max="360" value="0"></div>
+
             <div class="info-section" id="infoRoom" style="display: none;">
                 <div class="header">
                     <span id="info-close" role="button" onclick="closeRoomInfo()">×</span>
                     <h3>Group info</h3>
+                </div>
+
+                <div class="session-info">
+                    <label>Get Room Link Invitation</label>
+                        <div class="link-row">
+                            <input type="text" id="roomLinkInput" readonly style="background-color: #dadada; border: 0.5px solid rgba(74, 68, 62, 0.893); border-radius: 4px;">
+                            <a class="ui-tooltip" title="Copy Link To Clipboard"><i class="fas fa-copy" role="button" onclick="copyLink()" style="font-size: large; color: #f1a642;;"></i></a>
+                        </div>
                 </div>
 
                 <div class="session-info">
@@ -47,11 +56,13 @@
                         </div>
                 </div>
             </div>
+
         </main>
 
         <div id="sidebar" class="sidebar">
             <button class="btn-new-room"><a href="/Chatup/NewRoom">Create Room</a></button>
             <button class="btn-new-room"><a href="/Chatup/NewContact">Create Contact</a></button>
+            <button class="btn-new-room"><a href="/Chatup/NewRoom/JoinRoom">Join Room</a></button>
 
             <ul id="room-list" class="room-list">
                 <% if (snitchel!=null){ %>

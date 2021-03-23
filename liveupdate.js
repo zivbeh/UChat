@@ -6,6 +6,7 @@ const session = require('cookie-session')({
     saveUninitialized: false,
     cookie: { secure: false },
 });
+const jwt = require('jsonwebtoken');
 
 var flas = 'iceCream';
 function flash(flash){
@@ -313,7 +314,11 @@ function init(server) {
             UserNameArray.push(socket.data.user.dataValues.Name)
             console.log(UserNameArray)
 
-            io.to(socket.id).emit('getRoomInfo', UserNameArray);
+            // Generate room link
+            const token = jwt.sign({ roomId: RealRoomId }, process.env.JWT_KEY, { expiresIn: '30m' })
+            console.log(token)
+
+            io.to(socket.id).emit('getRoomInfo', UserNameArray, token);
         });
 
     })
