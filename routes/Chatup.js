@@ -187,7 +187,7 @@ router.get('/NewRoom/joinRoomWithLink', async function(req, res) {
   
         const roomId = decodedToken.roomId;
         console.log(roomId)
-        if (!roomId) {
+        if (roomId == null || roomId == undefined) {
             req.flash('error', 'Join Room token is invalid or has expired.');
             return res.redirect('/Chatup/NewRoom/joinRoom');
         }
