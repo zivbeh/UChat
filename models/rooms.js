@@ -20,7 +20,8 @@ module.exports = (sequelize, DataTypes) => {
   };
   rooms.init({
     roomName: DataTypes.STRING,
-    Due: { type: DataTypes.BOOLEAN, defaultValue: false}
+    Due: { type: DataTypes.BOOLEAN, defaultValue: false},
+    AdminId: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'ChatRoom',

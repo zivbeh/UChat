@@ -52,13 +52,14 @@ function roomArri(diction, room){
 
 router.get('/', async function(req, res, next) {
     const user = req.user;
-    if (!user){
+    console.log(user)
+    if (!user || user == undefined){
         req.flash('error', 'To get ChatUp you Have to login First');
         res.redirect('/sessions');
     }
 
     var room;
-    var id = user.dataValues.id;
+    var id = user.dataValues.id; // bug
     room = await doomi(id, flas);
 
     const roon = await db.ChatRoom.findAll({ where: { Due: true, '$Users.id$': id },
@@ -187,9 +188,15 @@ router.get('/NewRoom/joinRoomWithLink', async function(req, res) {
   
         const roomId = decodedToken.roomId;
         console.log(roomId)
-        if (roomId == null || roomId == undefined) {
+        var theRoom = await db.ChatRoom.findOne({ where: { id: roomId } });
+        if (theRoom == null || theRoom == undefined) {
             req.flash('error', 'Join Room token is invalid or has expired.');
             return res.redirect('/Chatup/NewRoom/joinRoom');
+        }
+        if(theRoom.dataValues.Due == true){
+           await theRoom.update({
+               Due: false
+           });
         }
 
         // Add to database
@@ -238,7 +245,8 @@ router.post('/newcontact', async function(req, res, next) {
 
 router.post('/newroom', async function(req, res, next) {
     const user = req.user;
-    const array = req.body.Users.split(',');
+    const arraywithoutspaces = req.body.Users.replace(/\s/g, '');;
+    const array = arraywithoutspaces.split(',');
     const users = await db.Users.findAll({where: {
         Email: array
     }});
@@ -280,13 +288,15 @@ router.post('/newroom', async function(req, res, next) {
                 } else {
                 }
             }
-            room = await db.ChatRoom.create({roomName: req.body.roomName, Due: true});
+            room = await db.ChatRoom.create({roomName: req.body.roomName, Due: true, AdminId: user.dataValues.id});
         } else {
-            room = await db.ChatRoom.create({roomName: req.body.roomName, Due: true});
+            room = await db.ChatRoom.create({roomName: req.body.roomName, Due: true, AdminId: user.dataValues.id});
         }
     } else {
-        room = await db.ChatRoom.create({roomName: req.body.roomName});
+        room = await db.ChatRoom.create({roomName: req.body.roomName, AdminId: user.dataValues.id});
     }
+
+    console.log(user.dataValues.id)
         
     const arr = [];
     for (let i = 0; i < users.length; i++) {
@@ -297,6 +307,36 @@ router.post('/newroom', async function(req, res, next) {
     await user.addChatRoom(room, { through: {} });
     flas = room.dataValues.id;
     res.redirect('/Chatup');
+});
+
+
+router.get('/Delete', async function(req, res, next) {
+
+    await db.Message.destroy({
+        where: {},
+    });
+    
+    await db.ChatRoom.destroy({
+        where: {},
+    });
+
+    await db.User_Rooms.destroy({
+        where: {},
+    });
+
+    res.send('all destroyed');
+});
+
+router.get('/Update', async function(req, res, next) {
+    var rooms = await db.ChatRoom.findAll({ where: {} });
+    // rooms.forEach(room => {
+    //     room.update({
+    //         AdminId: 4
+    //     });
+        console.log(rooms[0]._options)
+    // });
+
+    res.send('all updated');
 });
 
 module.exports = router;

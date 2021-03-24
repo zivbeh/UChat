@@ -295,9 +295,32 @@ function init(server) {
                 var value = ContactsArray[i].dataValues;
                 dictionary[value.RealUserId] = value.userName;
             }
-            console.log(dictionary)
+
+            // Generate room link
+            const token = jwt.sign({ roomId: RealRoomId }, process.env.JWT_KEY, { expiresIn: '30m' })
+            console.log(token)
+            var link = `http://chatup-sifo.herokuapp.com/Chatup/NewRoom/joinRoomWithLink/?token=${token}`;
+
+
+            // Admin
+            const RoomForAdmin = await db.ChatRoom.findOne({ where: { id: RealRoomId } });
+            var roomAdmin = RoomForAdmin.dataValues.AdminId;
+            console.log(roomAdmin, '-------------------------------')
 
             var UserNameArray = [];
+            console.log(dictionary)
+            
+            var AdminName;
+            if(roomAdmin = socket.data.user.dataValues.id){
+                AdminName = socket.data.user.dataValues.Name;
+            } else {
+                AdminName = dictionary[roomAdmin];
+                delete dictionary[roomAdmin];
+                UserNameArray.push(socket.data.user.dataValues.Name)
+            }
+            console.log(AdminName, dictionary)
+
+            // names
             for (let index = 0; index < UserIdArray.length; index++) {
                 const element = UserIdArray[index];
                 console.log(element)
@@ -311,16 +334,9 @@ function init(server) {
                 }
             }
             
-            UserNameArray.push(socket.data.user.dataValues.Name)
             console.log(UserNameArray)
 
-            // Generate room link
-            const token = jwt.sign({ roomId: RealRoomId }, process.env.JWT_KEY, { expiresIn: '30m' })
-            console.log(token)
-
-            var link = `http://chatup-sifo.herokuapp.com/Chatup/NewRoom/joinRoomWithLink/?token=${token}`;
-
-            io.to(socket.id).emit('getRoomInfo', UserNameArray, link);
+            io.to(socket.id).emit('getRoomInfo', UserNameArray, link, AdminName);
         });
 
     })

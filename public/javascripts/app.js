@@ -11,6 +11,8 @@
     const $myMessageBox = $('.my-message-box');
     const $myMessageButton = $('.fa-paper-plane');
 
+    const $admin = $('.admin');
+
     const $roomList = $('.room-list');
 
     const $info = $('.fa-info-circle');
@@ -55,21 +57,20 @@
 
     
     window.App = {
-        getRoomInfo(roomUsers, token) {
+        getRoomInfo(roomUsers, token, roomAdmin) {
             console.log('info', roomUsers, token) // Work!!!
-            roomlinkInput.value = `http://chatup-sifo.herokuapp.com/Chatup/NewRoom/joinRoomWithLink/?token=${token}`;
+            roomlinkInput.value = token;
 
             $roomInfoList.html('');
             infoRoom.style.display = "block";
+
+            $admin.html(`admin: <u>${roomAdmin}</u>`);
 
             roomUsers.forEach(member => {
                 $roomInfoList.append(
                     `<div class="user-row">
                         <span>${member}</span>
                     </div>`
-                    //  <button type="submit">
-                    //      <i class="fas fa-user-times"></i>
-                    //  </button>
                 );
             })
         },
