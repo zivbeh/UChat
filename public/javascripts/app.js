@@ -161,8 +161,8 @@
         }
         
         var height = $('main').height();
-        var cons6 = document.getElementById('cons');
-        cons6.style.height = height+"px";
+        // var cons6 = document.getElementById('cons');
+        // cons6.style.height = height+"px";
         
         if (currentRoom != 'NoRoom'){
             $('.room.active').removeClass('active');

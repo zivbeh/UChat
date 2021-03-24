@@ -15,14 +15,14 @@ function passwordShower() {
 //   }
 // });
 
-function heightsizer(){
-  var height = $('main').height();
-  var cons6 = document.getElementById('cons');
-  cons6.style.height = (height-55)+"px";
+// function heightsizer(){
+//   var height = $('main').height();
+//   var cons6 = document.getElementById('cons');
+//   cons6.style.height = (height-55)+"px";
 
-  var roomlist = document.getElementById('room-list');
-  roomlist.style.maxHeight = (height-65)+"px";
-}
+//   var roomlist = document.getElementById('room-list');
+//   roomlist.style.maxHeight = (height-65)+"px";
+// }
 
 var tiles = document.querySelector('html');
 const a = document.getElementById('input');
@@ -33,7 +33,7 @@ a.addEventListener('input', function () {
 }, false);
 
 window.onload = function(){
-  heightsizer();
+  //heightsizer();
   size();
   tiles.style.filter = 'hue-rotate(150deg)';
   a.value = 152;
@@ -48,6 +48,7 @@ window.onload = function(){
   // const d = document.getElementById('cons');
   // d.scrollTo(0,d.scrollHeight);
 }
+
 function size(){
   var widt = $(window).width();
   if(widt<=768){
@@ -57,13 +58,19 @@ function size(){
     er.style.width = 300+'px';
     const f = document.getElementById('main');
     f.style.display = "block";
+    
+    const lg = document.getElementById('container');
+    lg.style.gridTemplateColumns = "3fr 0fr";
+
     const n = document.getElementById('sidebar');
     n.style.display = "none";
   } else {
+    const lg = document.getElementById('container');
+    lg.style.gridTemplateColumns = "3fr 7fr";
     const e = document.getElementById('gingi');
     e.style.display = "none";
     const d = document.getElementById('sidebar');
-    d.style.width = "50%";
+    d.style.width = "100%";
     d.style.display = "block";
     const x = document.getElementById('main');
     x.style.display = "block";
@@ -90,16 +97,16 @@ document.getElementById("Back").addEventListener("click", function () {
   d.style.width = "100%";
 }, false);
 
-var width = $(window).width();
-$(window).on('resize', function() {
-  var cons = document.getElementById('cons');
-  var cons1 = $('.main');
-  var hie = cons1.height()-50;
-  cons.style.maxHeight = hie+"px";
+// var width = $(window).width();
+ $(window).on('resize', function() {
+//   var cons = document.getElementById('cons');
+//   var cons1 = $('.main');
+//   var hie = cons1.height()-50;
+//   cons.style.maxHeight = hie+"px";
 
-  size();
-  heightsizer();
-});
+   size();
+//   heightsizer();
+ });
 
 var height = $(window).height();
 if(height == 568){
@@ -109,9 +116,9 @@ if(height == 568){
     $(this).html(htmlfoo);
   });
 
-  var cons4 = document.getElementById('cons');
-  var hier = 400;
-  cons4.style.maxHeight = hier+"px";
+  // var cons4 = document.getElementById('cons');
+  // var hier = 400;
+  // cons4.style.maxHeight = hier+"px";
   
 } else {
   $('.messagon').each(function () {
