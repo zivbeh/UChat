@@ -538,7 +538,16 @@ width: calc(100% - 100px);
     width: 1750px;
     margin: 20px auto;
     grid-template-columns: 525px 1225px;
-    grid-template-rows: 70px calc(100vh - 120px);
+    /*grid-template-rows: 70px calc(100vh - 120px);*/
+    box-shadow: 0 0 8px 0 rgba(39, 39, 39, 0.4);
+  }
+}
+@media (min-width: 1200px) {
+  .container {
+    width: 1150px;
+    margin: 20px auto;
+    grid-template-columns: 525px 1225px;
+    /*grid-template-rows: -70px calc(100vh - 120px);*/
     box-shadow: 0 0 8px 0 rgba(39, 39, 39, 0.4);
   }
 }
