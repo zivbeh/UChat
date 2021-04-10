@@ -148,9 +148,10 @@
         } else if(Id=='No'){
             Id = $(this.parentNode.parentNode).attr('id');
         }
-        if (currentRoom === Id) return;
 
         var widt = $(window).width();
+        if (currentRoom === Id && widt>768) return;
+        
         if(widt<=768){
             const e = document.getElementById('gingi');
             e.style.display = "block";
