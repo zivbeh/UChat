@@ -92,6 +92,10 @@ a {
 }
 
 .info-section{
+  position: absolute;
+  height: 80.5vh;
+  width: 300px;
+  margin-left: 200px;
   z-index: 500;
   background-color: #2c3e50;
   transform: all 0s ease 0s;;
@@ -532,29 +536,41 @@ width: calc(100% - 100px);
   }
 }
 
-
+@media (min-width: 1500px) {
+  .container {
+    width: 1450px;
+    margin: 20px auto;
+    /*grid-template-columns: 1025px 1725px;*/
+    /*grid-template-rows: -70px calc(100vh - 120px);*/
+  }
+}
+@media (min-width: 2100px) {
+  .container {
+    width: 2050px;
+    grid-template-columns: 725px 1425px;
+    /*grid-template-rows: -70px calc(100vh - 120px);*/
+  }
+}
 @media (min-width: 1800px) {
   .container {
     width: 1750px;
-    margin: 20px auto;
     grid-template-columns: 525px 1225px;
-    /*grid-template-rows: 70px calc(100vh - 120px);*/
-    box-shadow: 0 0 8px 0 rgba(39, 39, 39, 0.4);
   }
 }
 @media (min-width: 1200px) {
   .container {
     width: 1150px;
-    margin: 20px auto;
     grid-template-columns: 525px 1225px;
-    /*grid-template-rows: -70px calc(100vh - 120px);*/
-    box-shadow: 0 0 8px 0 rgba(39, 39, 39, 0.4);
   }
 }
 @media (max-height: 400px) {
   .container {
     margin-bottom: 10px;
   }
+}
+.container {
+  margin: 20px auto;
+  width: 75%; /*    work when bootstrap is gone     */
 }
 .container > * {
   width: 100%;
