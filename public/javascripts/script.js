@@ -72,6 +72,10 @@ function size(){
       const lg = document.getElementById('container');
       lg.style.gridTemplateColumns = "3fr 7fr";
 
+      const mainWidth = $('main').width();
+      console.log(mainWidth)
+      infoRoom.style.marginLeft = (mainWidth - 300) + 'px';
+
       const e = document.getElementById('gingi');
       e.style.display = "none";
       const d = document.getElementById('sidebar');

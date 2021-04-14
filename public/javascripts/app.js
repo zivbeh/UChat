@@ -55,7 +55,12 @@
         return text;
     }
 
-    
+    $(window).resize(function() {
+        const mainWidth = $panel.width();
+        infoRoom.style.marginLeft = (mainWidth - 300) + 'px';
+    });
+ 
+
     window.App = {
         getRoomInfo(roomUsers, token, roomAdmin) {
             console.log('info', roomUsers, token) // Work!!!
@@ -63,6 +68,7 @@
 
             $roomInfoList.html('');
             infoRoom.style.display = "block";
+
 
             $admin.html(`admin: <u>${roomAdmin}</u>`);
 
